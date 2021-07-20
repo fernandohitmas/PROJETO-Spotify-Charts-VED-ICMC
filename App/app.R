@@ -6,6 +6,7 @@ library(sf)
 library(leaflet)
 library(plotly)
 library(data.table)
+
 dados <- readRDS("paises_e_nome_abreviado.rds")
 
 musicas.mais.tocadas <- dados %>%
