@@ -75,7 +75,7 @@ server <- function(input, output, session) {
                     "Streams/População: ", round(streams_per_pop,2), "<br>"
                   )) %>%
       addLegend("topright",
-                title = "Streams per<br> population",
+                title = "Streams por<br> população",
                 pal = pal,
                 values = ~colorData)
     
