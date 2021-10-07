@@ -1,5 +1,5 @@
 # Visualização de dados do Spotify Charts
-## Autores: Alice Pérez e Fernando Masumoto
+## Autores: <a href="https://github.com/alicegp">Alice Pérez</a> e Fernando Masumoto
 
 Hoje o Spotify diponibiliza um rank das 200 músicas mais tocadas do seu catálogo no site www.spotifycharts.com, nele é possível acessar um histórico, a depender do país, que conta com o registro desde 01 de janeiro de 2017.
 
