@@ -1,5 +1,5 @@
 '''
-Program copied and modfied from the original work from hktosun in his github account
+Program copied and modified from the original work from hktosun in his github account
 The main difference here is the utilization of the libraries futures to make parallel requests
 
 This code...
@@ -16,6 +16,13 @@ from datetime import timedelta, date
 import time
 from concurrent.futures import as_completed
 from requests_futures.sessions import FuturesSession
+
+
+# GLOBAL VARIABLES
+HEADER = {
+  "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36",
+  "X-Requested-With": "XMLHttpRequest"
+}
 
 
 def date_interval():
@@ -38,17 +45,13 @@ def create_links(country):
 
 def get_data(country):
     '''
-    It collects the data for each country, and write tham in a list.
+    It collects the data for each country, and write them in a list.
     The entries are (in order): Song, Artist, Date, Play Count, Rank
     '''
     links = create_links(country)
     rows = []
-    header = {
-      "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36",
-      "X-Requested-With": "XMLHttpRequest"
-    }
     with FuturesSession() as session:
-        futures = [session.get(link,headers=header) for link in links]
+        futures = [session.get(link,headers=HEADER) for link in links]
         for future in as_completed(futures):
             response = future.result()
             soup = bs(response.text, 'html.parser')
@@ -65,7 +68,7 @@ def get_data(country):
 
 def save_data(country):
     '''
-    It exports the dadta for each coutnry in a csv format.
+    It exports the data for each coutnry in a csv format.
     The column names are Song, Artist, Date, Streams, Rank.
     '''
     if not os.path.exists('data'):
@@ -84,12 +87,9 @@ def get_countries():
     It generates a list of countries for which the data is provided.
     '''
     print('Função get_countries!')
-    header = {
-      "User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.75 Safari/537.36",
-      "X-Requested-With": "XMLHttpRequest"
-    }
+
     session = requests.Session()
-    page = session.get('https://spotifycharts.com/regional',headers=header)
+    page = session.get('https://spotifycharts.com/regional',headers=HEADER)
     soup = bs(page.content, 'html.parser')
     countries = []
     ctys = soup.find('ul').findAll("li")
